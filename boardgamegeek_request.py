@@ -1,20 +1,41 @@
 import urllib.request
 import os
 from random import *
+from bs4 import BeautifulSoup
+import glob
+import pandas as pd
+import random
+
 
 ## Creates a directory of html files
 if not os.path.exists("html_files"):
 	os.mkdir("html_files")
 
-i = 2
-# while i = 1:
-#     print(i)
-file_name = "html_files/boardgame_{}.html".format(i)
-print(file_name)
-f = open(file_name, "wb")
-url = "https://boardgamegeek.com/browse/boardgame/page/{}".format(i)
-print(url)
-response = urllib.request.urlopen(url)
-html = response.read()
-f.write(html)
-f.close()
+i = 1050
+while i > 0:
+     print(i)
+     file_name = "html_files/boardgame_{}.html".format(i)
+     print(file_name)
+     f = open(file_name, "wb")
+     url = "https://boardgamegeek.com/browse/boardgame/page/{}".format(i)
+     print(url)
+     response = urllib.request.urlopen(url)
+     html = response.read()
+     f.write(html)
+     f.close()
+
+     f = open("html_files/boardgame_1059.html", "r",  encoding="utf8")
+     soup = BeautifulSoup(f.read(), 'html.parser')
+     f.close()
+
+     table = soup.find("table", {"id": "collectionitems"})
+     empty = table.find_all("td")
+     if empty == []:
+         i = 0
+    else:
+        i = i+1
+    print(i)
+
+    t = 10 + random.randint(-5, 5)
+
+    time.sleep(t)
