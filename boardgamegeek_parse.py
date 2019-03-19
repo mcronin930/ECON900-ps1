@@ -23,13 +23,22 @@ games_rows.pop(0)
 #
 for r in games_rows:
     game_rank = r.find("td", {"class": "collection_rank"}).text
-    print(game_rank)
-    df = df.append({
-        'rank': game_rank.strip()
-        }, ignore_index=True)
+    game_link = r.find("td", {"class": "collection_objectname"}).find("a",href = True).get('href')
+    game_name = r.find("td", {"class": "collection_objectname"}).find("a",href = True).text
+    game_year = r.find("td", {"class": "collection_objectname"}).find("span").text
+    game_geek_r = r.find_all("td", {"class": "collection_bggrating"})[0].text
+    game_avg_r = r.find_all("td", {"class": "collection_bggrating"})[1].text
+    game_vote_count = r.find_all("td", {"class": "collection_bggrating"})[2].text
 
-print(games_rows)
-df.to_csv("parsed_files/boardgame_dataset.csv")
-# currencies_table = soup.find("table", {"id": "currencies"})
-# currencies_tbody = currencies_table.find("tbody")
-# currency_rows = currencies_tbody.find_all("tr")
+#     df = df.append({
+#         'rank': game_rank.strip(),
+#         'link': game_link.strip(),
+#         'name': game_name.strip(),
+#         'year': game_year.strip().replace("(", "").replace(")", ""),
+#         'geek_rating': game_geek_r.strip(),
+#         'avg_rating': game_avg_r.strip(),
+#         'vote_count': game_vote_count.strip()
+#         }, ignore_index=True)
+#
+# print(df)
+# df.to_csv("parsed_files/boardgame_dataset.csv")
