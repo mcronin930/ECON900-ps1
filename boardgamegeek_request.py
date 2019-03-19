@@ -14,13 +14,15 @@ if not os.path.exists("html_files"):
 	os.mkdir("html_files")
 
 
-i = 1055
+i = 1
 while i > 0:
     print(i)
     file_name = "html_files/boardgame_{}.html".format(i)
     print(file_name)
     html_file = open(file_name, "w", encoding="utf8")
 
+    # Java is used to populate price data on the webpage
+    # The selenium webdriver is needed to trigger the java
     url = "https://boardgamegeek.com/browse/boardgame/page/{}".format(i)
     print(url)
     browser = webdriver.Firefox()
@@ -32,6 +34,8 @@ while i > 0:
 
     browser.close()
 
+    # The html needs to be parsed to see if table on the given page is populated
+    # if the table is not populated the program will stop running (end of list of games has been reached)
     f = open(file_name, "r", encoding="utf8")
     soup = BeautifulSoup(f.read(), 'html.parser')
     f.close()
