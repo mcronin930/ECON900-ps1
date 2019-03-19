@@ -14,9 +14,30 @@ if not os.path.exists("html_files"):
 	os.mkdir("html_files")
 
 
+i = 1
 browser = webdriver.Firefox()
-url = "https://boardgamegeek.com/browse/boardgame/page/1"
+url = "https://boardgamegeek.com/browse/boardgame/page/1059"
 browser.get(url)
+response = browser.page_source
+
+html_file = open("selenium_test.html", "w", encoding="utf8")
+html_file.write(response)
+html_file.close
+
+browser.close()
+
+f = open("selenium_test.html", "r", encoding="utf8")
+soup = BeautifulSoup(f.read(), 'html.parser')
+f.close()
+table = soup.find("table", {"id": "collectionitems"})
+empty = table.find_all("td")
+if empty == []:
+     i = 0
+else:
+     i = i+1
+print(i)
+
+
 # i = 1
 # while i > 0:
 #      print(i)
