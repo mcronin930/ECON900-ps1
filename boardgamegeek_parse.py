@@ -2,13 +2,17 @@ from bs4 import BeautifulSoup
 import os
 import glob
 import pandas as pd
+import re
 
 if not os.path.exists("parsed_files"):
 	os.mkdir("parsed_files")
 
 df = pd.DataFrame()
 
-one_file_name = "html_files/boardgame_2.html"
+
+#for one_file_name in glob.glob("html_files/*.html"):
+
+one_file_name = "html_files/boardgame_100.html"
 
 print("parsing " + one_file_name)
 
@@ -22,23 +26,34 @@ games_rows = games_table.find_all("tr")
 games_rows.pop(0)
 #
 for r in games_rows:
-    game_rank = r.find("td", {"class": "collection_rank"}).text
-    game_link = r.find("td", {"class": "collection_objectname"}).find("a",href = True).get('href')
-    game_name = r.find("td", {"class": "collection_objectname"}).find("a",href = True).text
-    game_year = r.find("td", {"class": "collection_objectname"}).find("span").text
-    game_geek_r = r.find_all("td", {"class": "collection_bggrating"})[0].text
-    game_avg_r = r.find_all("td", {"class": "collection_bggrating"})[1].text
-    game_vote_count = r.find_all("td", {"class": "collection_bggrating"})[2].text
+	print(r)
 
-#     df = df.append({
-#         'rank': game_rank.strip(),
-#         'link': game_link.strip(),
-#         'name': game_name.strip(),
-#         'year': game_year.strip().replace("(", "").replace(")", ""),
-#         'geek_rating': game_geek_r.strip(),
-#         'avg_rating': game_avg_r.strip(),
-#         'vote_count': game_vote_count.strip()
-#         }, ignore_index=True)
-#
-# print(df)
-# df.to_csv("parsed_files/boardgame_dataset.csv")
+	game_rank = r.find("td", {"class": "collection_rank"}).text
+	game_link = r.find("td", {"class": "collection_objectname"}).find("a",href = True).get('href')
+	game_name = r.find("td", {"class": "collection_objectname"}).find("a",href = True).text
+
+	if r.find("td", {"class": "collection_objectname"}).find("span") == None:
+		game_year = ""
+	else:
+		game_year = r.find("td", {"class": "collection_objectname"}).find("span").text
+
+	game_geek_r = r.find_all("td", {"class": "collection_bggrating"})[0].text
+	game_avg_r = r.find_all("td", {"class": "collection_bggrating"})[1].text
+	game_vote_count = r.find_all("td", {"class": "collection_bggrating"})[2].text
+	game_p = " ".join(r.find("td", {"class": "collection_shop"}).text.split())
+
+	print(game_year)
+
+	df = df.append({
+	    'file_name': one_file_name,
+	    'rank': game_rank.strip(),
+	    'link': game_link.strip(),
+	    'name': game_name.strip(),
+	    'year': game_year.strip().replace("(", "").replace(")", ""),
+	    'geek_rating': game_geek_r.strip(),
+	    'avg_rating': game_avg_r.strip(),
+	    'vote_count': game_vote_count.strip(),
+	    'price': game_p
+	    }, ignore_index=True)
+
+	df.to_csv("parsed_files/boardgame_dataset.csv")
