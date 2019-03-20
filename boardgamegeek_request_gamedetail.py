@@ -17,28 +17,27 @@ game_list = df[np.isfinite(df['rank'])]
 
 
 ext = game_list.link
-print(ext)
 
-# i = 0
-# for e in ext:
-# 	url = "https://boardgamegeek.com" + e + "/stats"
-# 	print(url)
-#
-# 	name =e.replace("/", "_")
-#
-# 	file_name = "html_files_games/{}.html".format(name)
-# 	print(file_name)
-# 	html_file = open(file_name, "w", encoding="utf8")
-# 	browser = webdriver.Firefox()
-# 	browser.get(url)
-# 	response = browser.page_source
-#
-# 	html_file.write(response)
-# 	html_file.close
-#
-# 	browser.close()
-#
-# 	i = i+1
-#
-# 	t = 5 + random.randint(-2, 2)
-# 	time.sleep(t)
+i = 0
+for e in ext:
+	url = "https://boardgamegeek.com" + e + "/stats"
+	print(url)
+
+	name =e.replace("/", "_")
+
+	file_name = "html_files_games/{}.html".format(name)
+	print(file_name)
+	html_file = open(file_name, "w", encoding="utf8")
+	browser = webdriver.Firefox()
+	browser.get(url)
+	response = browser.page_source
+
+	html_file.write(response)
+	html_file.close
+
+	browser.close()
+
+	i = i+1
+
+	t = 5 + random.randint(-2, 2)
+	time.sleep(t)
