@@ -51,4 +51,4 @@ for one_file_name in glob.glob("html_files/*.html"):
 		    'price': game_p
 		    }, ignore_index=True)
 
-		df.to_csv("parsed_files/boardgame_dataset.csv")
+df.to_csv("parsed_files/boardgame_dataset.csv")

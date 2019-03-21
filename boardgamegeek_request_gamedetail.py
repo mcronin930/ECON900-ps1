@@ -16,10 +16,11 @@ df = pd.read_csv("parsed_files/boardgame_dataset.csv")
 game_list = df[np.isfinite(df['rank'])]
 
 
-ext = game_list.link
+ext = game_list.sort_values('rank').link
 
-i = 0
+i = 1
 for e in ext:
+	print(i)
 	url = "https://boardgamegeek.com" + e + "/stats"
 	print(url)
 
@@ -39,5 +40,5 @@ for e in ext:
 
 	i = i+1
 
-	t = 5 + random.randint(-2, 2)
+	t = 3 + random.randint(-2, 2)
 	time.sleep(t)

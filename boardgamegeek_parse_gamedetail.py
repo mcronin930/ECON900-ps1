@@ -36,3 +36,15 @@ for one_file_name in glob.glob("html_files_games/*.html"):
 	print(game_players)
 	print(game_time)
 	print(game_age)
+
+	df = df.append({
+	    'game_weight': game_weight,
+	    'game_fans': game_fans,
+	    'game_cat': game_cat,
+	    'game_players': game_players,
+	    'game_time': game_time,
+	    'game_age': game_age,
+		'file_name': one_file_name,
+	    }, ignore_index=True)
+
+df.to_csv("parsed_files_detail/boardgame_detail_dataset.csv")
