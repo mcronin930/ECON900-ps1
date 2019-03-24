@@ -16,10 +16,12 @@ df = pd.read_csv("parsed_files/boardgame_dataset.csv")
 game_list = df[np.isfinite(df['rank'])]
 
 
-ext = game_list.sort_values('rank').link
+ext = game_list.sort_values('rank').reset_index(drop=True).link
 
-i = 1
-for e in ext:
+print(ext[8633])
+
+i = 8633
+for e in ext[8722:10000]:
 	print(i)
 	url = "https://boardgamegeek.com" + e + "/stats"
 	print(url)
