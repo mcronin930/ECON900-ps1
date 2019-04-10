@@ -18,10 +18,10 @@ game_list = df[np.isfinite(df['rank'])]
 
 ext = game_list.sort_values('rank').reset_index(drop=True).link
 
-print(ext[8633])
+print(ext[8896])
 
 i = 8633
-for e in ext[8722:10000]:
+for e in ext[8896:10000]:
 	print(i)
 	url = "https://boardgamegeek.com" + e + "/stats"
 	print(url)
