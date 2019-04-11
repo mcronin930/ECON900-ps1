@@ -4,20 +4,27 @@ import re
 
 dataset = pd.read_csv("parsed_files/boardgame_dataset.csv")
 print(dataset.head())
+price = dataset['price'].str.replace("Shop",""). \
+    str.replace("[","").str.replace("]",""). \
+    str.replace("Lowest Amazon", "L_Amazon"). \
+    str.replace("New Amazon", "N_Amazon"). \
+    str.replace("iOS App", "App"). \
+    str.split(": ")
 
-price = list(dataset['price'].astype(str))
-print(price)
+e = len(price) - 1
+for i in range(0, e):
+    price[i] = "_".join(price[i])
 
-# print(price.dtypes)
+df = pd.DataFrame(data=price)
+
+df['N_Amazon'] = df.price.str.slice(str.find("N_Amazon"),str.find(" ", str.find("N_Amazon")))
+
+# df = pd.DataFrame()
 #
-# for i in price:
-#     prices.append(i.split('$')[0])
+# for i in range(0, e):
+#     N_Amazon = price[i][price[i].find("N_Amazon"):price[i].find(" ", price[i].find("N_Amazon"))]
 #
-# print(prices.head())
+#     df = df.append({
+#         'N_Amazon': N_Amazon.strip() }, ignore_index=True)
 
-
-# a = ['apple,orange,cherry', 'tomato,potato,cucumber', 'pear,grape, kiwi']
-# b = [s.split(',') for s in a]
-#
-# b = pd.DataFrame(b)
-# print(b)
+print(df)
