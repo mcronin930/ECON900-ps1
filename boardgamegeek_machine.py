@@ -9,22 +9,18 @@ price = dataset['price'].str.replace("Shop",""). \
     str.replace("Lowest Amazon", "L_Amazon"). \
     str.replace("New Amazon", "N_Amazon"). \
     str.replace("iOS App", "App"). \
+    str.replace("Too low to display", "Too_low"). \
     str.split(": ")
 
 e = len(price) - 1
 for i in range(0, e):
-    price[i] = "_".join(price[i])
+    price[i] = "__".join(price[i]).strip()
 
 df = pd.DataFrame(data=price)
+price_list = df['price'].str.split(" ", expand = True)
+price_list = pd.DataFrame(data=price_list).stack().str.split("__", expand = True)
+price_list.columns = ['Price_type', 'Price']
+price_list.index = price_list.index.droplevel(1)
+merged_data = price_list.join(dataset, how='outer')
 
-df['N_Amazon'] = df.price.str.slice(str.find("N_Amazon"),str.find(" ", str.find("N_Amazon")))
-
-# df = pd.DataFrame()
-#
-# for i in range(0, e):
-#     N_Amazon = price[i][price[i].find("N_Amazon"):price[i].find(" ", price[i].find("N_Amazon"))]
-#
-#     df = df.append({
-#         'N_Amazon': N_Amazon.strip() }, ignore_index=True)
-
-print(df)
+print(merged_data)
