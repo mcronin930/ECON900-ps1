@@ -39,8 +39,13 @@ merged_data['game_idex'] = merged_data.index
 
 ### Merge ame Prices By Game and Price Type with Game Data
 training_data = pd.merge(merged_data, price_list, how='left', on=['game_idex', 'Price_type'])
+training_data['Price'] = pd.to_numeric(training_data['Price'].str.replace("Too_low", ""). \
+    str.replace("Free", "0.00"). \
+    str.replace(",", ""). \
+    str.replace("$", ""))
+
 
 print(merged_data)
 print(price_list)
 print(training_data)
-# merged_data.to_csv("training_data/boardgame_price_dataset.csv")
+training_data.to_csv("training_data/boardgame_price_dataset.csv")
