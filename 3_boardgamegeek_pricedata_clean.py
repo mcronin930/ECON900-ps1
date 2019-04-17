@@ -52,4 +52,6 @@ training_data.columns = ['avg_rating','file_name','geek_rating',
 print(merged_data)
 print(price_list)
 print(training_data)
+
+print(training_data.describe())
 training_data.to_csv("training_data/boardgame_price_dataset.csv")
