@@ -4,6 +4,7 @@ import pandas as pd
 dataset = pd.read_csv("training_data/boardgame_price_dataset.csv")
 
 d = {}
+df = pd.DataFrame()
 print(dataset.head())
 Training = dataset.dropna(subset=['avg_rating', 'geek_rating', 'rank', 'votes', 'year'])
 Training['game_age'] = 2019 - Training['year']
@@ -34,4 +35,13 @@ for i in types:
 
 
     d["R_2_{0}".format(i)] = regression.score(Data, Target)
+
+    print(i)
     print(d["R_2_{0}".format(i)])
+
+    df = df.append({
+        'Price Type Estimated': i,
+        'R-Squared Score': d["R_2_{0}".format(i)],
+        }, ignore_index=True)
+
+print(df)
