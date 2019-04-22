@@ -14,15 +14,12 @@ types = ['List', 'L_Amazon', 'N_Amazon', 'App', 'Amazon']
 for i in types:
     OLS_Training = Training.loc[(Training['price_type'] == i)].dropna(subset=['price'])
     Pred_Missing = Training.loc[(Training['price_type'] == i)][pd.isnull(Training['price'])]
-    # print(OLS_Training)
-    # print(Pred_Missing)
+    print(OLS_Training)
+    print(Pred_Missing)
 
     Data = OLS_Training.iloc[:,[1,3,7,8,-1]].values
     Target = OLS_Training.iloc[:,13]
-    # print(Data)
-    # print(Target)
-    #
-    # ## construct a linear regression machine (as we did witht he KNN machine)
+
     regression = linear_model.LinearRegression()
 
     regression.fit(Data, Target)
