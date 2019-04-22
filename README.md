@@ -32,4 +32,4 @@ Uses the linear model machine from sklearn to create a machine that predicts gee
 the machine.
 
 ## Additional Files
-The write up for this project is 'Supervised Learning To Imput Missing Data & Predict Ratings.pdf'
+The write up for this project is 'Supervised Learning To Impute Missing Data & Predict Ratings.pdf'
